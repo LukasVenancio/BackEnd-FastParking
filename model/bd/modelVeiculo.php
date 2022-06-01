@@ -140,11 +140,11 @@
          $conexao = conectarMysql();
 
          // Monta do script para enviar para o BD
-         $sql = "update tblcontatos set
-             placa            = '".$dadosVeiculo["nome"]     ."',  
-             id_cor           = '".$dadosVeiculo["obs"]      ."',
-             id_categoria     = '".$dadosVeiculo["foto"]     ."',
-             id_modelo        = '".$dadosVeiculo["idestado"] ."'
+         $sql = "update tbl_veiculo set
+             placa            = '".$dadosVeiculo["placa"]     ."',  
+             id_cor           = '".$dadosVeiculo["id_cor"]      ."',
+             id_categoria     = '".$dadosVeiculo["id_categoria"]     ."',
+             id_modelo        = '".$dadosVeiculo["id_modelo"] ."'
              where id         = ".$dadosVeiculo["id"]        .";"
          ;  
          
@@ -167,6 +167,4 @@
          fecharConexaoMysql($conexao);
          return $statusResultado;
     }
-
-
 ?>
