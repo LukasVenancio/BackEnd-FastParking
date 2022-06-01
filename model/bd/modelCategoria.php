@@ -1,6 +1,6 @@
 <?php
 
-   require_once("conexaoMySQL.php");
+   require_once('conexaoMySQL.php');
 
    function selectAllCategoria()
    {

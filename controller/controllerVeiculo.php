@@ -1,0 +1,134 @@
+<?php
+    require_once("./model/bd/modelVeiculo.php");
+
+    function listarVeiculos()
+    {
+        $dados = selectAllVeiculo();
+
+        if(!empty($dados)){
+            return $dados;
+        
+        }else{
+            return false;
+        }
+    }
+
+    function inserirVeiculos($dados)
+    {
+        if(!empty($dados['placa']) && !empty($dados['idcor']) && is_numeric($dados['idcor']) && !empty($dados['idcategoria']) && is_numeric($dados['idcategoria']) && !empty($dados['idmodelo']) && is_numeric($dados['idmodelo']))
+        {
+            if(insertVeiculo($dados))
+            {
+                return true;
+            }else
+            {
+                return array(
+                    'Erro' => 'Não foi possivel inserir os dados no Banco de Dados'
+                );
+            }
+        }else
+        {
+            return array(
+                'Erro' => 'Existem campos obrigatorios que não foram preenchidos!!!'
+            );
+        }
+    }
+
+    function excluirVeiculo($id)
+    {
+        if(!empty($id) && is_numeric($id))
+        {
+            if(deleteVeiculo($id))
+            {
+                return true;
+            }else
+            {
+                return array(
+                    'Erro' => 'Não foi possível excluir o registro do Banco de Dados'
+                );
+            }
+        }else
+        {
+            return array(
+                'Erro' => 'Não é possivel excluir um registro sem informar um id valido'
+            );
+        }
+    }
+
+    function buscarVeiculo($id)
+    {
+        if(!empty($id) && is_numeric($id))
+        {
+            $dados = selectByidVeiculo($id);
+
+            if(!empty($dados))
+            {
+                return $dados;
+            }else
+            {
+                return array(
+                    'Erro' => 'Registro não encontrado no Banco de Dados'
+                );
+            }
+
+        }else
+        {
+            return array(
+                'Erro' => 'Não é possivel buscar um registro sem informar um id valido'
+            );
+        }
+    }
+
+    function buscarVeiculoPlaca($placa)
+    {
+        if(!empty($placa))
+        {
+            $dados = selectByplacaVeiculo($placa);
+
+            if(!empty($dados))
+            {
+                return $dados;
+            }else
+            {
+                return array(
+                    'Erro' => 'Registro não encontrado no Banco de Dados'
+                );
+            }
+        }else
+        {
+            return array(
+                'Erro' => 'Não é possivel buscar um registro sem informar uma placa valido'
+            );
+        }
+    }
+
+    function atualizarVeiculo($dados)
+    {
+        if(!empty($dados['id']) && is_numeric($dados['id']))
+        {
+            if(!empty($dados['placa']) && !empty($dados['idcor']) && is_numeric($dados['idcor']) && !empty($dados['idcategoria']) && is_numeric($dados['idcategoria']) && !empty($dados['idmodelo']) && is_numeric($dados['idmodelo']))
+            {
+                if(updateVeiculo($dados))
+                {
+                    return true;
+                }else
+                {
+                    return array(
+                        'Erro' => 'Não foi possível atualizar os dados no Banco de Dados'
+                    );
+                }
+            }else
+            {
+                return array(
+                    'Erro' => 'Existem campos obrigatorios que não foram preenchidos!!!'
+                );
+            }
+        }else
+        {
+            return array(
+                'Erro' => 'Não é possivel atualizar um registro sem informar um id valido'
+            );
+        }
+    }
+
+?>

@@ -1,8 +1,8 @@
 <?php
 
-    require_once("conexaoMySQL.php");
+    require_once('conexaoMySQL.php');
 
-   function inserirModelo($dadosModelo)
+   function insertModelo($dadosModelo)
    {
       $conexao = conectarMysql();
 

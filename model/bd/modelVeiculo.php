@@ -1,6 +1,6 @@
 <?php
 
-    require_once("conexaoMySql.php");
+    require_once('conexaoMySQL.php');
 
    function insertVeiculo($dadosVeiculo)
    {
@@ -111,6 +111,40 @@
 
     }
 
+    function selectByplacaVeiculo($placa)
+    {
+        $conexao = conectarMysql();
+
+        $sql = "select * from tbl_veiculo where placa =".$placa;
+
+        $result = mysqli_query($conexao, $sql);
+
+        if($result)
+        {
+            if($rsDados = mysqli_fetch_assoc($result))
+            {
+                $arrayDados= array(
+                    "id"            => $rsDados["id"],
+                    "placa"         => $rsDados["placa"],
+                    "id_cor"        => $rsDados["id_cor"],
+                    "id_categoria"  => $rsDados["id_categoria"],
+                    "id_modelo"     => $rsDados["id_modelo"]
+                );
+            }   
+            
+            fecharConexaoMysql($conexao);
+
+            if(empty($arrayDados)){
+                return false;
+            }else
+            {
+                return $arrayDados;
+            }
+
+            
+        }
+    }
+
     function deleteVeiculo($id)
     {
         // abre a conexão como BD
@@ -167,4 +201,8 @@
          fecharConexaoMysql($conexao);
          return $statusResultado;
     }
+
+
+
+
 ?>
