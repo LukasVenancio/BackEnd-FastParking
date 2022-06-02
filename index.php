@@ -11,6 +11,7 @@
         "id_estacionamento" => 1
     );
 
+    //asasasasaa 
     //insertVaga($dados);
 
     // $vagas = selectAllVagas();
