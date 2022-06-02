@@ -20,9 +20,9 @@
     /*Separa a URL quando encontra o caracter informado.*/
     $url = explode('/', $urlHTTP);
 
-    if(strtolower($url[0]) == 'produtos'){
+    if(strtolower($url[0]) == 'vagas'){
 
-        require_once('produtosAPI/index.php');
+        require_once('apiVagas/index.php');
 
     }elseif(strtolower($url[0]) == 'categorias'){
 

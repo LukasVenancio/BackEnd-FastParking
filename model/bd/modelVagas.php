@@ -18,7 +18,8 @@
                 $resultado[$contator] = array(
 
                     "id"                => $dadosArray['id'],
-                    "ocupacao"          => $dadosArray['preferencial'],
+                    "ocupacao"          => $dadosArray['ocupacao'],
+                    "preferencial"      => $dadosArray['preferencial'],
                     "id_tipo"           => $dadosArray['id_tipo'],
                     "id_localizacao"    => $dadosArray['id_localizacao'],
                     "id_estacionamento" => $dadosArray['id_estacionamento']
@@ -30,7 +31,14 @@
 
             fecharConexaoMysql($conexao);
 
-            return $resultado;
+            if(isset($resultado)){
+                return $resultado;
+            
+            }else{
+                return false;
+            }
+            
+            
 
         }
 
@@ -52,7 +60,8 @@
                 $resultado = array(
 
                     "id"                => $dadosArray['id'],
-                    "ocupacao"          => $dadosArray['preferencial'],
+                    "ocupacao"          => $dadosArray['ocupacao'],
+                    "preferencial"      => $dadosArray['preferencial'],
                     "id_tipo"           => $dadosArray['id_tipo'],
                     "id_localizacao"    => $dadosArray['id_localizacao'],
                     "id_estacionamento" => $dadosArray['id_estacionamento']
@@ -62,7 +71,12 @@
 
         fecharConexaoMysql($conexao);
 
-        return $resultado;
+        if(isset($resultado)){
+            return $resultado;
+        
+        }else{
+            return false;
+        }
 
     }
 
@@ -83,7 +97,7 @@
 
                     "id"                => $dadosArray['id'],
                     "ocupacao"          => $dadosArray['ocupacao'],
-                    "preferencal"       => $dadosArray['preferencal'],
+                    "preferencial"      => $dadosArray['preferencial'],
                     "id_tipo"           => $dadosArray['id_tipo'],
                     "id_localizacao"    => $dadosArray['id_localizacao'],
                     "id_estacionamento" => $dadosArray['id_estacionamento']
@@ -93,7 +107,12 @@
 
         fecharConexaoMysql($conexao);
 
-        return $resultado;
+        if(isset($resultado)){
+            return $resultado;
+        
+        }else{
+            return false;
+        }
 
     }
 

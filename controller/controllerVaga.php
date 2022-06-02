@@ -1,6 +1,6 @@
 <?php
 
-    require_once('../model/bd/modelVaga.php');
+    require_once(SRC . '/model/bd/modelVagas.php');
 
     function listarVagas(){
 
