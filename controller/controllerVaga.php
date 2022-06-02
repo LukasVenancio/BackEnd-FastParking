@@ -79,6 +79,27 @@
         }
     }
 
+    function buscarVagasPorOcupacao($ocupacao){
+
+        if(!empty($ocupacao) && is_numeric($ocupacao)){
+
+            $dados = selectVagaByOcupacao($ocupacao);
+
+            if(!empty($dados)){
+                return $dados;
+            
+            }else{
+                return array(
+                            'Erro' => 'Vagas não encontradas.');
+            }
+        
+        }else{
+
+            return array(
+                        'Erro' => 'Valor inválido.');
+        }
+    }
+
     function atualizarVagas($dados){
 
         if(!empty($dados['id']) && is_numeric($dados['id'])){

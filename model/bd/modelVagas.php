@@ -66,6 +66,37 @@
 
     }
 
+    function selectVagaByOcupacao ($ocupacao){
+
+        $conexao = conectarMysql();
+        $sql = "select * from tbl_vaga where ocupacao = " . $ocupacao . ";";
+        
+
+        $dados = mysqli_query($conexao, $sql);
+
+        if($dados){
+
+
+            if($dadosArray = mysqli_fetch_assoc($dados)){
+
+                $resultado = array(
+
+                    "id"                => $dadosArray['id'],
+                    "ocupacao"          => $dadosArray['ocupacao'],
+                    "preferencal"       => $dadosArray['preferencal'],
+                    "id_tipo"           => $dadosArray['id_tipo'],
+                    "id_localizacao"    => $dadosArray['id_localizacao'],
+                    "id_estacionamento" => $dadosArray['id_estacionamento']
+                );
+            }
+        }
+
+        fecharConexaoMysql($conexao);
+
+        return $resultado;
+
+    }
+
     function deleteVaga($id){
 
         $conexao = conectarMysql();
