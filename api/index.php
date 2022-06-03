@@ -24,8 +24,9 @@
 
         require_once('apiVagas/index.php');
 
-    }elseif(strtolower($url[0]) == 'categorias'){
+    }elseif(strtolower($url[0]) == 'veiculos'){
 
+        require_once('apiVeiculo/index.php');
         
     }
 
