@@ -14,39 +14,8 @@
         $dados = listarVagas();
 
         if($dados){
-
-            require_once('../controller/controllerTipo.php');
-            require_once('../controller/controllerLocalizacao.php');
-            require_once('../controller/controllerPiso.php');
-            require_once('../controller/controllerCorredor.php');
-
-            $cont = 0;
-
-            while($cont < count($dados)){
-
-
-                $tipo = buscarTipos($dados[$cont]['id_tipo'])['tipo'];
-                $localizaçao = buscarLocalizacoes($dados[$cont]['id_localizacao']);
-                $piso = buscarPisos($localizaçao['id_piso'])['piso'];
-                $corredor = buscarCorredores($localizaçao['id_corredor'])['corredor'];
-                
-                $dadosConvertidos[$cont] = array(
-
-                    $dados[$cont],
-                    "tipo"       => $tipo,
-                    "sigla"      => $localizaçao['sigla'],
-                    "piso"      =>$piso,
-                    "corredor"  =>$corredor
-                ); 
-
-                $cont++;
-
-            }
-
-            // var_dump($dadosConvertidos);
-            // die;
             
-            $dadosJson = toJSON($dadosConvertidos);
+            $dadosJson = toJSON($dados);
 
             if($dadosJson){
 
@@ -78,9 +47,18 @@
 
             if($dadosJson){
 
-                return $response    ->withHeader('Content-Type', 'application/json')
+                if(!isset($dados['Erro'])){
+
+                    return $response ->withHeader('Content-Type', 'application/json')
                                     ->write($dadosJson)
                                     ->withStatus(200);
+                
+                }else{
+                    
+                    return $response    ->withStatus(404)
+                                        ->withHeader('Content-Type', 'application/json')
+                                        ->write($dadosJson);
+                }
             }
         
         }else{
@@ -105,9 +83,18 @@
 
             if($dadosJson){
 
-                return $response    ->withHeader('Content-Type', 'application/json')
+                if(!isset($dados['Erro'])){
+
+                    return $response ->withHeader('Content-Type', 'application/json')
                                     ->write($dadosJson)
                                     ->withStatus(200);
+                
+                }else{
+                    
+                    return $response    ->withStatus(404)
+                                        ->withHeader('Content-Type', 'application/json')
+                                        ->write($dadosJson);
+                }
             }
         
         }else{
@@ -120,17 +107,65 @@
 
     });
 
+    $app->get('/vagas/preferencial/{valorPreferencial}', function($request, $response, $args){
+
+        $valorPreferencial = $args['valorPreferencial'];
+
+        $dados = buscarVagasPorPreferencial($valorPreferencial);
+
+        if($dados){
+
+            $dadosJson = toJSON($dados);
+
+            if($dadosJson){
+
+                if(!isset($dados['Erro'])){
+
+                    return $response ->withHeader('Content-Type', 'application/json')
+                                    ->write($dadosJson)
+                                    ->withStatus(200);
+                
+                }else{
+                    
+                    return $response    ->withStatus(404)
+                                        ->withHeader('Content-Type', 'application/json')
+                                        ->write($dadosJson);
+                }
+            }
+        
+        }else{
+
+            return $response     ->withStatus(404)
+                                ->withHeader('Content-Type', 'application/json')
+                                ->write('[{"message" : "Item não encontrado"}]');
+        }
 
 
+    });
 
+    $app->delete('/vagas/{id}', function($request, $response, $args){
 
+        $id = $args['id'];
 
+        $dados = excluirVagas($id);
 
+        if(isset($dados['Erro'])){
+
+            $dadosJson = toJSON($dados);
+
+            return $response     ->withStatus(404)
+                                ->withHeader('Content-Type', 'application/json')
+                                ->write($dadosJson);
+        
+        }elseif($dados){
+
+            return $response    ->withHeader('Content-Type', 'application/json')
+                                ->write('[{"message " : "Registro excluído com sucesso!"}]')
+                                ->withStatus(200);
+        }
+
+    });
 
     $app->run();
     
-
-
-
-
 ?>

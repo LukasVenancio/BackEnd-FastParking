@@ -81,9 +81,30 @@
 
     function buscarVagasPorOcupacao($ocupacao){
 
-        if(!empty($ocupacao) && is_numeric($ocupacao)){
+        if(is_numeric($ocupacao)){
 
             $dados = selectVagaByOcupacao($ocupacao);
+
+            if(!empty($dados)){
+                return $dados;
+            
+            }else{
+                return array(
+                            'Erro' => 'Vagas não encontradas.');
+            }
+        
+        }else{
+
+            return array(
+                        'Erro' => 'Valor inválido.');
+        }
+    }
+
+    function buscarVagasPorPreferencial($preferencial){
+
+        if(is_numeric($preferencial)){
+
+            $dados = selectVagaByPreferencial($preferencial);
 
             if(!empty($dados)){
                 return $dados;

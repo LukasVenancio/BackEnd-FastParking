@@ -5,7 +5,26 @@
     function selectAllVagas (){
 
         $conexao = conectarMysql();
-        $sql = "select * from tbl_vaga;";
+        $sql = "select 
+                tbl_vaga.id as id_vaga, 
+                tbl_vaga.ocupacao, 
+                tbl_vaga.preferencial, 
+                tbl_vaga.id_tipo, 
+                tbl_vaga.id_localizacao, 
+                tbl_vaga.id_estacionamento, 
+                tbl_tipo.tipo, 
+                tbl_tipo.id_valor, 
+                tbl_valor.hora_inicial,        
+                tbl_valor.demais_horas, 
+                tbl_localizacao.sigla, 
+                tbl_corredor.corredor, 
+                tbl_piso.piso
+                from ((tbl_vaga
+                        inner join tbl_tipo on tbl_vaga.id_tipo = tbl_tipo.id 
+                            inner join tbl_valor on tbl_tipo.id_valor = tbl_valor.id)
+                        inner join tbl_localizacao on tbl_vaga.id_localizacao = tbl_localizacao.id 
+                            inner join tbl_piso on tbl_localizacao.id_piso = tbl_piso.id 
+                                inner join tbl_corredor on tbl_localizacao.id_corredor = tbl_corredor.id);";
 
         $dados = mysqli_query($conexao, $sql);
 
@@ -17,12 +36,25 @@
 
                 $resultado[$contator] = array(
 
-                    "id"                => $dadosArray['id'],
+                    "id"                => $dadosArray['id_vaga'],
                     "ocupacao"          => $dadosArray['ocupacao'],
                     "preferencial"      => $dadosArray['preferencial'],
-                    "id_tipo"           => $dadosArray['id_tipo'],
-                    "id_localizacao"    => $dadosArray['id_localizacao'],
-                    "id_estacionamento" => $dadosArray['id_estacionamento']
+                    "id_estacionamento" => $dadosArray['id_estacionamento'],
+                    "tbl_tipo"              => array(
+                                                    "id_tipo"       => $dadosArray['id_tipo'],
+                                                    "tipo"          => $dadosArray['tipo'],
+                                                    "id_valor"      => $dadosArray['id_valor'],
+                                                    "hora_inicial"  => $dadosArray['hora_inicial'],
+                                                    "demais_horas"  => $dadosArray['demais_horas']
+                    ),
+                    "tbl_localizacao" => array(
+                                                    "id_localizacao"  => $dadosArray['id_localizacao'],
+                                                    "sigla"           => $dadosArray['sigla'],
+                                                    "corredor"        => $dadosArray['corredor'],
+                                                    "piso"            => $dadosArray['piso'],
+                    )
+                    
+
                 );
 
                 $contator++;
@@ -37,9 +69,6 @@
             }else{
                 return false;
             }
-            
-            
-
         }
 
     }
@@ -47,7 +76,27 @@
     function selectVagaById ($id){
 
         $conexao = conectarMysql();
-        $sql = "select * from tbl_vaga where id = " . $id . ";";
+        $sql = "select 
+                tbl_vaga.id as id_vaga, 
+                tbl_vaga.ocupacao, 
+                tbl_vaga.preferencial, 
+                tbl_vaga.id_tipo, 
+                tbl_vaga.id_localizacao, 
+                tbl_vaga.id_estacionamento, 
+                tbl_tipo.tipo, 
+                tbl_tipo.id_valor, 
+                tbl_valor.hora_inicial,        
+                tbl_valor.demais_horas, 
+                tbl_localizacao.sigla, 
+                tbl_corredor.corredor, 
+                tbl_piso.piso
+                from ((tbl_vaga
+                        inner join tbl_tipo on tbl_vaga.id_tipo = tbl_tipo.id 
+                            inner join tbl_valor on tbl_tipo.id_valor = tbl_valor.id)
+                        inner join tbl_localizacao on tbl_vaga.id_localizacao = tbl_localizacao.id 
+                            inner join tbl_piso on tbl_localizacao.id_piso = tbl_piso.id 
+                                inner join tbl_corredor on tbl_localizacao.id_corredor = tbl_corredor.id)  
+                        where tbl_vaga.id = ". $id .";";
         
 
         $dados = mysqli_query($conexao, $sql);
@@ -59,12 +108,26 @@
 
                 $resultado = array(
 
-                    "id"                => $dadosArray['id'],
+                    "id"                => $dadosArray['id_vaga'],
                     "ocupacao"          => $dadosArray['ocupacao'],
                     "preferencial"      => $dadosArray['preferencial'],
-                    "id_tipo"           => $dadosArray['id_tipo'],
-                    "id_localizacao"    => $dadosArray['id_localizacao'],
-                    "id_estacionamento" => $dadosArray['id_estacionamento']
+                    "id_estacionamento" => $dadosArray['id_estacionamento'],
+                    "tbl_tipo"              => array(
+                                                    "id_tipo"       => $dadosArray['id_tipo'],
+                                                    "tipo"          => $dadosArray['tipo'],
+                                                    "id_valor"      => $dadosArray['id_valor'],
+                                                    "hora_inicial"  => $dadosArray['hora_inicial'],
+                                                    "demais_horas"  => $dadosArray['demais_horas']
+                    ),
+                    "tbl_localizacao" => array(
+                                                    "id_localizacao"  => $dadosArray['id_localizacao'],
+                                                    "sigla"           => $dadosArray['sigla'],
+                                                    "corredor"        => $dadosArray['corredor'],
+                                                    "piso"            => $dadosArray['piso'],
+                    )
+                    
+
+                
                 );
             }
         }
@@ -83,7 +146,27 @@
     function selectVagaByOcupacao ($ocupacao){
 
         $conexao = conectarMysql();
-        $sql = "select * from tbl_vaga where ocupacao = " . $ocupacao . ";";
+        $sql = "select 
+                tbl_vaga.id as id_vaga, 
+                tbl_vaga.ocupacao, 
+                tbl_vaga.preferencial, 
+                tbl_vaga.id_tipo, 
+                tbl_vaga.id_localizacao, 
+                tbl_vaga.id_estacionamento, 
+                tbl_tipo.tipo, 
+                tbl_tipo.id_valor, 
+                tbl_valor.hora_inicial,        
+                tbl_valor.demais_horas, 
+                tbl_localizacao.sigla, 
+                tbl_corredor.corredor, 
+                tbl_piso.piso
+                from ((tbl_vaga
+                        inner join tbl_tipo on tbl_vaga.id_tipo = tbl_tipo.id 
+                            inner join tbl_valor on tbl_tipo.id_valor = tbl_valor.id)
+                        inner join tbl_localizacao on tbl_vaga.id_localizacao = tbl_localizacao.id 
+                            inner join tbl_piso on tbl_localizacao.id_piso = tbl_piso.id 
+                                inner join tbl_corredor on tbl_localizacao.id_corredor = tbl_corredor.id) 
+                        where tbl_vaga.ocupacao = ". $ocupacao.";";
         
 
         $dados = mysqli_query($conexao, $sql);
@@ -91,17 +174,109 @@
         if($dados){
 
 
-            if($dadosArray = mysqli_fetch_assoc($dados)){
+            $contator = 0;
 
-                $resultado = array(
+            while($dadosArray = mysqli_fetch_assoc($dados)){
 
-                    "id"                => $dadosArray['id'],
+                $resultado[$contator] = array(
+
+                    "id"                => $dadosArray['id_vaga'],
                     "ocupacao"          => $dadosArray['ocupacao'],
                     "preferencial"      => $dadosArray['preferencial'],
-                    "id_tipo"           => $dadosArray['id_tipo'],
-                    "id_localizacao"    => $dadosArray['id_localizacao'],
-                    "id_estacionamento" => $dadosArray['id_estacionamento']
+                    "id_estacionamento" => $dadosArray['id_estacionamento'],
+                    "tbl_tipo"              => array(
+                                                    "id_tipo"       => $dadosArray['id_tipo'],
+                                                    "tipo"          => $dadosArray['tipo'],
+                                                    "id_valor"      => $dadosArray['id_valor'],
+                                                    "hora_inicial"  => $dadosArray['hora_inicial'],
+                                                    "demais_horas"  => $dadosArray['demais_horas']
+                    ),
+                    "tbl_localizacao" => array(
+                                                    "id_localizacao"  => $dadosArray['id_localizacao'],
+                                                    "sigla"           => $dadosArray['sigla'],
+                                                    "corredor"        => $dadosArray['corredor'],
+                                                    "piso"            => $dadosArray['piso'],
+                    )
+                    
+
                 );
+
+                $contator++;
+
+            }
+        }
+
+        fecharConexaoMysql($conexao);
+
+        if(isset($resultado)){
+            return $resultado;
+        
+        }else{
+            return false;
+        }
+
+    }
+
+    function selectVagaByPreferencial ($preferencial){
+
+        $conexao = conectarMysql();
+        $sql = "select 
+                tbl_vaga.id as id_vaga, 
+                tbl_vaga.ocupacao, 
+                tbl_vaga.preferencial, 
+                tbl_vaga.id_tipo, 
+                tbl_vaga.id_localizacao, 
+                tbl_vaga.id_estacionamento, 
+                tbl_tipo.tipo, 
+                tbl_tipo.id_valor, 
+                tbl_valor.hora_inicial,        
+                tbl_valor.demais_horas, 
+                tbl_localizacao.sigla, 
+                tbl_corredor.corredor, 
+                tbl_piso.piso
+                from ((tbl_vaga
+                        inner join tbl_tipo on tbl_vaga.id_tipo = tbl_tipo.id 
+                            inner join tbl_valor on tbl_tipo.id_valor = tbl_valor.id)
+                        inner join tbl_localizacao on tbl_vaga.id_localizacao = tbl_localizacao.id 
+                            inner join tbl_piso on tbl_localizacao.id_piso = tbl_piso.id 
+                                inner join tbl_corredor on tbl_localizacao.id_corredor = tbl_corredor.id) 
+                        where tbl_vaga.preferencial = ". $preferencial.";";
+        
+
+        $dados = mysqli_query($conexao, $sql);
+
+        if($dados){
+
+
+            $contator = 0;
+
+            while($dadosArray = mysqli_fetch_assoc($dados)){
+
+                $resultado[$contator] = array(
+
+                    "id"                => $dadosArray['id_vaga'],
+                    "ocupacao"          => $dadosArray['ocupacao'],
+                    "preferencial"      => $dadosArray['preferencial'],
+                    "id_estacionamento" => $dadosArray['id_estacionamento'],
+                    "tbl_tipo"              => array(
+                                                    "id_tipo"       => $dadosArray['id_tipo'],
+                                                    "tipo"          => $dadosArray['tipo'],
+                                                    "id_valor"      => $dadosArray['id_valor'],
+                                                    "hora_inicial"  => $dadosArray['hora_inicial'],
+                                                    "demais_horas"  => $dadosArray['demais_horas']
+                    ),
+                    "tbl_localizacao" => array(
+                                                    "id_localizacao"  => $dadosArray['id_localizacao'],
+                                                    "sigla"           => $dadosArray['sigla'],
+                                                    "corredor"        => $dadosArray['corredor'],
+                                                    "piso"            => $dadosArray['piso'],
+                    )
+                    
+
+                );
+
+                $contator++;
+
             }
         }
 
@@ -195,9 +370,5 @@
         return $resultado;
 
     }
-
-
-
-
 
 ?>
