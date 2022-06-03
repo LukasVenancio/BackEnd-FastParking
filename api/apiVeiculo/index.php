@@ -69,41 +69,41 @@
    });
 
    //Endpoint Requisição para listar veiculos pela placa
-   $app->get('/veiculos/{placa}', function($request, $response, $args)
-   {
+   // $app->get('/veiculos/{placa}', function($request, $response, $args)
+   // {
    
-      require_once('../modolo/config.php');
-      require_once('../controller/controllerVeiculo.php');
+   //    require_once('../modolo/config.php');
+   //    require_once('../controller/controllerVeiculo.php');
 
-      $placa = $args['placa'];
+   //    $placa = $args['placa'];
 
-      if($dados = buscarVeiculoPlaca($placa))
-      {
-      if(!isset($dados["Erro"])){
-         if($dadosJSON = toJSON($dados))
-         {
-            return  $response ->withStatus(200)
-                              ->withHeader('Content-Type', 'application/json')
-                              ->write($dadosJSON);
-         }
-      }else
-      {
-         $dadosJSON=toJSON($dados);
+   //    if($dados = buscarVeiculoPlaca($placa))
+   //    {
+   //    if(!isset($dados["Erro"])){
+   //       if($dadosJSON = toJSON($dados))
+   //       {
+   //          return  $response ->withStatus(200)
+   //                            ->withHeader('Content-Type', 'application/json')
+   //                            ->write($dadosJSON);
+   //       }
+   //    }else
+   //    {
+   //       $dadosJSON=toJSON($dados);
 
-         return  $response ->withStatus(404)
-                           ->withHeader('Content-Type', 'application/json')
-                           ->write('{"message" : "Dados invalidos",
-                                    "Erro" : '.$dadosJSON.'}');
-      }    
-      }else
-      {
+   //       return  $response ->withStatus(404)
+   //                         ->withHeader('Content-Type', 'application/json')
+   //                         ->write('{"message" : "Dados invalidos",
+   //                                  "Erro" : '.$dadosJSON.'}');
+   //    }    
+   //    }else
+   //    {
 
-      return  $response ->withStatus(404)
-                        ->withHeader('Content-Type', 'application/json')
-                        ->write('{"message" : "Nenhum veiculo encontrado"}');
-      }
+   //    return  $response ->withStatus(404)
+   //                      ->withHeader('Content-Type', 'application/json')
+   //                      ->write('{"message" : "Nenhum veiculo encontrado"}');
+   //    }
    
-   });   
+   // });   
 
    //Endpoint Requisição para deletar Veiculo por id
    $app->delete('/veiculos/{id}', function($request, $response, $args)
