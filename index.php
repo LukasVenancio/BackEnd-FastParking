@@ -16,7 +16,7 @@
 
     // $vagas = selectAllVagas();
 
-    // var_dump($vagas);
-    // die;
+    var_dump($dados);
+    die;
 
 ?>
