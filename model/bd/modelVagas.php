@@ -343,8 +343,8 @@
                         id_estacionamento = ".  $dados['id_estacionamento'].",
                         piso = ".               $dados['piso'].",
                         corredor = ".           $dados['corredor'].",
-                        sigla = ".              $dados['sigla'].
-                " where id = ". $dados['id'].";";
+                        sigla = '".              $dados['sigla'].
+                "' where id = ". $dados['id'].";";
 
         if(mysqli_query($conexao, $sql)){
 
