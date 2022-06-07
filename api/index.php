@@ -28,6 +28,8 @@
 
         require_once('apiVeiculo/index.php');
         
+    }elseif(strtolower($url[0]) == 'clientes'){
+        require_once('apiCliente/index.php');
     }
 
 

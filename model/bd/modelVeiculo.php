@@ -115,7 +115,7 @@
     {
         $conexao = conectarMysql();
 
-        $sql = "select * from tbl_veiculo where placa =".$placa;
+        $sql = "select * from tbl_veiculo where placa ='". $placa. "';"; 
 
         $result = mysqli_query($conexao, $sql);
 
