@@ -224,9 +224,6 @@
                     "sigla"             => $bodyData['sigla']
                 );
 
-                // print_r($dados);
-                // die;
-
                 $resposta = atualizarVagas($dados);
 
                 if(is_bool($resposta) && $resposta){

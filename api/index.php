@@ -28,6 +28,9 @@
 
         require_once('apiVeiculo/index.php');
         
+    }elseif(strtolower($url[0]) == 'controle'){
+        
+        require_once('apiControle/index.php');
     }
 
 ?>
