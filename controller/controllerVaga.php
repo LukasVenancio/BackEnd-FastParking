@@ -16,9 +16,13 @@
 
     function inserirVagas($dados){
 
-        if(!empty($dados['ocupacao']) && is_numeric($dados['ocupacao']) && !empty($dados['preferencial']) && is_numeric($dados['preferencial']) &&
-            !empty($dados['id_tipo']) && is_numeric($dados['id_tipo']) && !empty($dados['id_localizacao']) && is_numeric($dados['id_localizacao']) &&
-            !empty($dados['id_estacionamento']) && is_numeric($dados['id_estacionamento'])){
+        // var_dump(!empty($dados['ocupacao']));
+        // die;
+
+        if(is_numeric($dados['ocupacao']) && is_numeric($dados['preferencial']) &&
+            !empty($dados['id_tipo']) && is_numeric($dados['id_tipo']) && !empty($dados['id_estacionamento']) && is_numeric($dados['id_estacionamento']) &&
+            !empty($dados['piso']) && is_numeric($dados['piso']) && !empty($dados['corredor']) && is_numeric($dados['corredor']) &&
+            !empty($dados['sigla'])){
 
             if(insertVaga($dados)){
 
@@ -126,8 +130,9 @@
         if(!empty($dados['id']) && is_numeric($dados['id'])){
 
             if(!empty($dados['ocupacao']) && is_numeric($dados['ocupacao']) && !empty($dados['preferencial']) && is_numeric($dados['preferencial']) &&
-                !empty($dados['id_tipo']) && is_numeric($dados['id_tipo']) && !empty($dados['id_localizacao']) && is_numeric($dados['id_localizacao']) &&
-                !empty($dados['id_estacionamento']) && is_numeric($dados['id_estacionamento'])){
+                    !empty($dados['id_tipo']) && is_numeric($dados['id_tipo']) && !empty($dados['id_estacionamento']) && is_numeric($dados['id_estacionamento']) &&
+                    !empty($dados['piso']) && is_numeric($dados['piso']) && !empty($dados['corredor']) && is_numeric($dados['corredor']) &&
+                    !empty($dados['sigla'])){
 
                 if(updateVaga($dados)){
 

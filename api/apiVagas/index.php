@@ -166,6 +166,39 @@
 
     });
 
+    $app->post('/vagas', function($request, $response, $args){
+
+        /*Recupera o formato de dados do header da requisição.*/
+        $contentTypeHeader = $request->getHeaderLine('Content-Type');
+
+        $contentType = explode(";", $contentTypeHeader);
+
+        if($contentType[0] == 'application/json'){
+
+            $bodyData = $request->getParsedBody();
+
+            $resposta = inserirVagas($bodyData);
+
+            if(is_bool($resposta) && $resposta){
+
+                return $response    ->withStatus(201)
+                                    ->withHeader('Content-Type', 'application/json')
+                                    ->write('[{"message" : "Registro inserido com sucesso!"}]');
+            
+            }elseif(is_array($resposta) && isset($resposta['Erro'])){
+
+                $dadosJson = toJSON($resposta);
+                return $response  ->withStatus(404)
+                                ->withHeader('Content-Type', 'application/json')
+                                ->write($dadosJson);
+
+            }
+        }
+
+
+
+    });
+
     $app->run();
     
 ?>
