@@ -106,6 +106,7 @@
 
     function atualizarVeiculo($dados)
     {
+
         if(!empty($dados['id']) && is_numeric($dados['id']))
         {
             if(!empty($dados['placa']) && !empty($dados['id_cor']) && is_numeric($dados['id_cor']) && !empty($dados['id_categoria']) && is_numeric($dados['id_categoria']) && !empty($dados['id_modelo']) && is_numeric($dados['id_modelo']))
