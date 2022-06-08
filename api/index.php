@@ -31,6 +31,10 @@
     }elseif(strtolower($url[0]) == 'controle'){
         
         require_once('apiControle/index.php');
+    
+    }elseif(strtolower($url[0]) == 'valor'){
+
+        require_once('apiValor/index.php');
     }
 
 ?>

@@ -21,7 +21,8 @@
                     inner join tbl_tipo 
                         on tbl_vaga.id_tipo = tbl_tipo.id 
                     inner join tbl_valor 
-                        on tbl_tipo.id_valor = tbl_valor.id;";
+                        on tbl_tipo.id_valor = tbl_valor.id 
+                order by tbl_vaga.id;";
 
         $dados = mysqli_query($conexao, $sql);
 
@@ -155,7 +156,8 @@
                         on tbl_vaga.id_tipo = tbl_tipo.id 
                     inner join tbl_valor 
                         on tbl_tipo.id_valor = tbl_valor.id 
-                where tbl_vaga.ocupacao =". $ocupacao ." ;";
+                where tbl_vaga.ocupacao =". $ocupacao ." 
+                order by tbl_vaga.id;";
         
 
         $dados = mysqli_query($conexao, $sql);
@@ -225,7 +227,8 @@
                         on tbl_vaga.id_tipo = tbl_tipo.id 
                     inner join tbl_valor 
                         on tbl_tipo.id_valor = tbl_valor.id 
-                where tbl_vaga.preferencial =". $preferencial ." ;";
+                where tbl_vaga.preferencial =". $preferencial ." 
+                order by tbl_vaga.id;";
         
 
         $dados = mysqli_query($conexao, $sql);
