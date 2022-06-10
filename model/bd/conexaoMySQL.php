@@ -4,7 +4,7 @@
 
 const SERVER = 'localhost';
 const USER = 'root';
-const PASSWORD = '272421';
+const PASSWORD = 'bcd127';
 const DATABASE = 'fast_parking';
 
 function conectarMysql(){
