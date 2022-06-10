@@ -312,10 +312,7 @@
                                 ". $dados['id_estacionamento'].",
                                 ". $dados['piso'].",
                                 ". $dados['corredor'].",
-                                '". $dados['sigla']."');";
-
-        // var_dump( $sql);
-        // die;
+                                '". strtoupper( $dados['sigla'])."');";
 
         if(mysqli_query($conexao, $sql)){
 

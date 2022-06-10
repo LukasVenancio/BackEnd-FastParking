@@ -1,13 +1,24 @@
 <?php
-/**select if(((timediff(tbl_controle.data_saida, tbl_controle.data_entrada)) / 60) > 1, 'yes', (timediff(tbl_controle.data_saida, tbl_controle.data_entrada) * tbl_valor.hora_inicial)) from tbl_controle inner join tbl_valor where tbl_controle.id = 3; */
+
     require_once('conexaoMySQL.php');
 
     function selectAllControles (){
 
         $conexao = conectarMysql();
-        $sql = "select tbl_controle.id, 
+        $sql = "select 
+                        tbl_controle.id, 
                         tbl_controle.data_entrada,
                         tbl_controle.data_saida,
+                        (select if(
+                                hour(
+                                    timediff(tbl_controle.data_saida, tbl_controle.data_entrada)) > 1, 
+                                        (select if(tbl_controle.data_saida <> '0000-00-00 00:00:00',
+                                        (select 
+                                            ((hour(
+                                            timediff(tbl_controle.data_saida, tbl_controle.data_entrada)) - 1) 
+                                                * tbl_valor.demais_horas) 
+                                                    + tbl_valor.hora_inicial), 'Controle não finalizado')),
+                                        (select tbl_valor.hora_inicial)))  as valor,
                         tbl_veiculo.id as id_veiculo,
                         tbl_veiculo.placa,
                         tbl_cliente.id as id_cliente,
@@ -48,6 +59,7 @@
                     "id"            => $dadosArray['id'],
                     "data_entrada"  => $dadosArray['data_entrada'],
                     "data_saida"    => $dadosArray['data_saida'],
+                    "valor"         => $dadosArray['valor'],
                     "veiculo"   => array(
                                                 "id_veiculo" => $dadosArray['id_veiculo'],
                                                 "placa"      => $dadosArray['placa'],
@@ -87,9 +99,20 @@
     function selectControleByDataSaidaNull(){
 
         $conexao = conectarMysql();
-        $sql = "select tbl_controle.id, 
+        $sql = "select 
+                        tbl_controle.id, 
                         tbl_controle.data_entrada,
                         tbl_controle.data_saida,
+                        (select if(
+                                hour(
+                                    timediff(tbl_controle.data_saida, tbl_controle.data_entrada)) > 1, 
+                                        (select if(tbl_controle.data_saida <> '0000-00-00 00:00:00',
+                                        (select 
+                                            ((hour(
+                                            timediff(tbl_controle.data_saida, tbl_controle.data_entrada)) - 1) 
+                                                * tbl_valor.demais_horas) 
+                                                    + tbl_valor.hora_inicial), 'Controle não finalizado')),
+                                        (select tbl_valor.hora_inicial)))  as valor,
                         tbl_veiculo.id as id_veiculo,
                         tbl_veiculo.placa,
                         tbl_cliente.id as id_cliente,
@@ -114,7 +137,7 @@
                         inner join tbl_tipo
                             on tbl_vaga.id_tipo = tbl_tipo.id
                         inner join tbl_valor
-                            on tbl_tipo.id_valor = tbl_valor.id 
+                            on tbl_tipo.id_valor = tbl_valor.id
                     where tbl_controle.data_saida = '0000-00-00 00:00:00'
                     order by tbl_controle.id;";
         
@@ -133,6 +156,7 @@
                     "id"            => $dadosArray['id'],
                     "data_entrada"  => $dadosArray['data_entrada'],
                     "data_saida"    => $dadosArray['data_saida'],
+                    "valor"         => $dadosArray['valor'],
                     "veiculo"   => array(
                                                 "id_veiculo" => $dadosArray['id_veiculo'],
                                                 "placa"      => $dadosArray['placa'],
@@ -172,9 +196,20 @@
     function selectControleById ($id){
 
         $conexao = conectarMysql();
-        $sql = "select tbl_controle.id, 
+        $sql = "select 
+                        tbl_controle.id, 
                         tbl_controle.data_entrada,
                         tbl_controle.data_saida,
+                        (select if(
+                                hour(
+                                    timediff(tbl_controle.data_saida, tbl_controle.data_entrada)) > 1, 
+                                        (select if(tbl_controle.data_saida <> '0000-00-00 00:00:00',
+                                        (select 
+                                            ((hour(
+                                            timediff(tbl_controle.data_saida, tbl_controle.data_entrada)) - 1) 
+                                                * tbl_valor.demais_horas) 
+                                                    + tbl_valor.hora_inicial), 'Controle não finalizado')),
+                                        (select tbl_valor.hora_inicial)))  as valor,
                         tbl_veiculo.id as id_veiculo,
                         tbl_veiculo.placa,
                         tbl_cliente.id as id_cliente,
@@ -199,7 +234,7 @@
                         inner join tbl_tipo
                             on tbl_vaga.id_tipo = tbl_tipo.id
                         inner join tbl_valor
-                            on tbl_tipo.id_valor = tbl_valor.id 
+                            on tbl_tipo.id_valor = tbl_valor.id
                     where tbl_controle.id = ". $id .";";
         
 
@@ -215,6 +250,7 @@
                     "id"            => $dadosArray['id'],
                     "data_entrada"  => $dadosArray['data_entrada'],
                     "data_saida"    => $dadosArray['data_saida'],
+                    "valor"         => $dadosArray['valor'],    
                     "veiculo"   => array(
                                                 "id_veiculo" => $dadosArray['id_veiculo'],
                                                 "placa"      => $dadosArray['placa'],
@@ -252,9 +288,20 @@
     function selectControleByIdVeiculo ($id){
 
         $conexao = conectarMysql();
-        $sql = "select tbl_controle.id, 
+        $sql = "select 
+                        tbl_controle.id, 
                         tbl_controle.data_entrada,
                         tbl_controle.data_saida,
+                        (select if(
+                                hour(
+                                    timediff(tbl_controle.data_saida, tbl_controle.data_entrada)) > 1, 
+                                        (select if(tbl_controle.data_saida <> '0000-00-00 00:00:00',
+                                        (select 
+                                            ((hour(
+                                            timediff(tbl_controle.data_saida, tbl_controle.data_entrada)) - 1) 
+                                                * tbl_valor.demais_horas) 
+                                                    + tbl_valor.hora_inicial), 'Controle não finalizado')),
+                                        (select tbl_valor.hora_inicial)))  as valor,
                         tbl_veiculo.id as id_veiculo,
                         tbl_veiculo.placa,
                         tbl_cliente.id as id_cliente,
@@ -279,7 +326,7 @@
                         inner join tbl_tipo
                             on tbl_vaga.id_tipo = tbl_tipo.id
                         inner join tbl_valor
-                            on tbl_tipo.id_valor = tbl_valor.id 
+                            on tbl_tipo.id_valor = tbl_valor.id
                     where tbl_veiculo.id = ". $id ." 
                     order by tbl_controle.id;";
         
@@ -297,6 +344,7 @@
                     "id"            => $dadosArray['id'],
                     "data_entrada"  => $dadosArray['data_entrada'],
                     "data_saida"    => $dadosArray['data_saida'],
+                    "valor"         => $dadosArray['valor'],
                     "veiculo"   => array(
                                                 "id_veiculo" => $dadosArray['id_veiculo'],
                                                 "placa"      => $dadosArray['placa'],
@@ -337,9 +385,20 @@
     function selectControleByPlacaVeiculo ($placa){
 
         $conexao = conectarMysql();
-        $sql = "select tbl_controle.id, 
+        $sql = "select 
+                        tbl_controle.id, 
                         tbl_controle.data_entrada,
                         tbl_controle.data_saida,
+                        (select if(
+                                hour(
+                                    timediff(tbl_controle.data_saida, tbl_controle.data_entrada)) > 1, 
+                                        (select if(tbl_controle.data_saida <> '0000-00-00 00:00:00',
+                                        (select 
+                                            ((hour(
+                                            timediff(tbl_controle.data_saida, tbl_controle.data_entrada)) - 1) 
+                                                * tbl_valor.demais_horas) 
+                                                    + tbl_valor.hora_inicial), 'Controle não finalizado')),
+                                        (select tbl_valor.hora_inicial)))  as valor,
                         tbl_veiculo.id as id_veiculo,
                         tbl_veiculo.placa,
                         tbl_cliente.id as id_cliente,
@@ -364,7 +423,7 @@
                         inner join tbl_tipo
                             on tbl_vaga.id_tipo = tbl_tipo.id
                         inner join tbl_valor
-                            on tbl_tipo.id_valor = tbl_valor.id 
+                            on tbl_tipo.id_valor = tbl_valor.id
                     where tbl_veiculo.placa = '". $placa ."' 
                     order by tbl_controle.id;";
         
@@ -382,6 +441,7 @@
                     "id"            => $dadosArray['id'],
                     "data_entrada"  => $dadosArray['data_entrada'],
                     "data_saida"    => $dadosArray['data_saida'],
+                    "valor"         => $dadosArray['valor'],
                     "veiculo"   => array(
                                                 "id_veiculo" => $dadosArray['id_veiculo'],
                                                 "placa"      => $dadosArray['placa'],
@@ -422,9 +482,20 @@
     function selectControleByIdVaga ($id){
 
         $conexao = conectarMysql();
-        $sql = "select tbl_controle.id, 
+        $sql = "sselect 
+                        tbl_controle.id, 
                         tbl_controle.data_entrada,
                         tbl_controle.data_saida,
+                        (select if(
+                                hour(
+                                    timediff(tbl_controle.data_saida, tbl_controle.data_entrada)) > 1, 
+                                        (select if(tbl_controle.data_saida <> '0000-00-00 00:00:00',
+                                        (select 
+                                            ((hour(
+                                            timediff(tbl_controle.data_saida, tbl_controle.data_entrada)) - 1) 
+                                                * tbl_valor.demais_horas) 
+                                                    + tbl_valor.hora_inicial), 'Controle não finalizado')),
+                                        (select tbl_valor.hora_inicial)))  as valor,
                         tbl_veiculo.id as id_veiculo,
                         tbl_veiculo.placa,
                         tbl_cliente.id as id_cliente,
@@ -449,7 +520,7 @@
                         inner join tbl_tipo
                             on tbl_vaga.id_tipo = tbl_tipo.id
                         inner join tbl_valor
-                            on tbl_tipo.id_valor = tbl_valor.id 
+                            on tbl_tipo.id_valor = tbl_valor.id
                     where tbl_vaga.id = ". $id ." 
                     order by tbl_controle.id;";
         
@@ -468,6 +539,7 @@
                     "id"            => $dadosArray['id'],
                     "data_entrada"  => $dadosArray['data_entrada'],
                     "data_saida"    => $dadosArray['data_saida'],
+                    "valor"         => $dadosArray['valor'],
                     "veiculo"   => array(
                                                 "id_veiculo" => $dadosArray['id_veiculo'],
                                                 "placa"      => $dadosArray['placa'],
