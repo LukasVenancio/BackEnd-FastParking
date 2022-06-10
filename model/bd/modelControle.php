@@ -12,16 +12,17 @@
                         format(
                             (select if(
                                 hour(
-                                    timediff(tbl_controle.data_saida, tbl_controle.data_entrada)) > 1, 
-                                        (select if(tbl_controle.data_saida <> '0000-00-00 00:00:00',
+                                    timediff(current_timestamp(), tbl_controle.data_entrada)) > 1, 
+                                        (select if(tbl_controle.data_saida like ('0000-00-00 00:00:00'),
                                             (select 
                                                 ((hour(
-                                                timediff(tbl_controle.data_saida, tbl_controle.data_entrada)) - 1) 
+                                                timediff(current_timestamp(), tbl_controle.data_entrada)) - 1) 
                                                     * tbl_valor.demais_horas) 
                                                         + tbl_valor.hora_inicial 
-                                                        + (((minute(timediff(tbl_controle.data_saida, tbl_controle.data_entrada)) 
+                                                        + (((minute(timediff(current_timestamp(), tbl_controle.data_entrada)) 
                                                             / 60) * tbl_valor.demais_horas)   )), 'Controle não finalizado')),
-                                        (select tbl_valor.hora_inicial))) ,2)  as valor,
+                                        (select tbl_valor.hora_inicial))) ,2)  as valor_atual,
+						tbl_controle.valor_final,
                         tbl_veiculo.id as id_veiculo,
                         tbl_veiculo.placa,
                         tbl_cliente.id as id_cliente,
@@ -62,7 +63,8 @@
                     "id"            => $dadosArray['id'],
                     "data_entrada"  => $dadosArray['data_entrada'],
                     "data_saida"    => $dadosArray['data_saida'],
-                    "valor_total"   => $dadosArray['valor'],
+                    "valor_final"   => $dadosArray['valor_final'],
+                    "valor_atual"   => $dadosArray['valor_atual'],
                     "veiculo"   => array(
                                                 "id_veiculo" => $dadosArray['id_veiculo'],
                                                 "placa"      => $dadosArray['placa'],
@@ -109,16 +111,17 @@
                         format(
                             (select if(
                                 hour(
-                                    timediff(tbl_controle.data_saida, tbl_controle.data_entrada)) > 1, 
-                                        (select if(tbl_controle.data_saida <> '0000-00-00 00:00:00',
+                                    timediff(current_timestamp(), tbl_controle.data_entrada)) > 1, 
+                                        (select if(tbl_controle.data_saida like ('0000-00-00 00:00:00'),
                                             (select 
                                                 ((hour(
-                                                timediff(tbl_controle.data_saida, tbl_controle.data_entrada)) - 1) 
+                                                timediff(current_timestamp(), tbl_controle.data_entrada)) - 1) 
                                                     * tbl_valor.demais_horas) 
                                                         + tbl_valor.hora_inicial 
-                                                        + (((minute(timediff(tbl_controle.data_saida, tbl_controle.data_entrada)) 
+                                                        + (((minute(timediff(current_timestamp(), tbl_controle.data_entrada)) 
                                                             / 60) * tbl_valor.demais_horas)   )), 'Controle não finalizado')),
-                                        (select tbl_valor.hora_inicial))) ,2)  as valor,
+                                        (select tbl_valor.hora_inicial))) ,2)  as valor_atual,
+						tbl_controle.valor_final,
                         tbl_veiculo.id as id_veiculo,
                         tbl_veiculo.placa,
                         tbl_cliente.id as id_cliente,
@@ -162,7 +165,8 @@
                     "id"            => $dadosArray['id'],
                     "data_entrada"  => $dadosArray['data_entrada'],
                     "data_saida"    => $dadosArray['data_saida'],
-                    "valor_total"   => $dadosArray['valor'],
+                    "valor_final"   => $dadosArray['valor_final'],
+                    "valor_atual"   => $dadosArray['valor_atual'],
                     "veiculo"   => array(
                                                 "id_veiculo" => $dadosArray['id_veiculo'],
                                                 "placa"      => $dadosArray['placa'],
@@ -209,16 +213,17 @@
                         format(
                             (select if(
                                 hour(
-                                    timediff(tbl_controle.data_saida, tbl_controle.data_entrada)) > 1, 
-                                        (select if(tbl_controle.data_saida <> '0000-00-00 00:00:00',
+                                    timediff(current_timestamp(), tbl_controle.data_entrada)) > 1, 
+                                        (select if(tbl_controle.data_saida like ('0000-00-00 00:00:00'),
                                             (select 
                                                 ((hour(
-                                                timediff(tbl_controle.data_saida, tbl_controle.data_entrada)) - 1) 
+                                                timediff(current_timestamp(), tbl_controle.data_entrada)) - 1) 
                                                     * tbl_valor.demais_horas) 
                                                         + tbl_valor.hora_inicial 
-                                                        + (((minute(timediff(tbl_controle.data_saida, tbl_controle.data_entrada)) 
+                                                        + (((minute(timediff(current_timestamp(), tbl_controle.data_entrada)) 
                                                             / 60) * tbl_valor.demais_horas)   )), 'Controle não finalizado')),
-                                        (select tbl_valor.hora_inicial))) ,2)  as valor,
+                                        (select tbl_valor.hora_inicial))) ,2)  as valor_atual,
+						tbl_controle.valor_final,
                         tbl_veiculo.id as id_veiculo,
                         tbl_veiculo.placa,
                         tbl_cliente.id as id_cliente,
@@ -259,7 +264,8 @@
                     "id"            => $dadosArray['id'],
                     "data_entrada"  => $dadosArray['data_entrada'],
                     "data_saida"    => $dadosArray['data_saida'],
-                    "valor_total"   => $dadosArray['valor'],    
+                    "valor_final"   => $dadosArray['valor_final'],
+                    "valor_atual"   => $dadosArray['valor_atual'],
                     "veiculo"   => array(
                                                 "id_veiculo" => $dadosArray['id_veiculo'],
                                                 "placa"      => $dadosArray['placa'],
@@ -304,16 +310,17 @@
                         format(
                             (select if(
                                 hour(
-                                    timediff(tbl_controle.data_saida, tbl_controle.data_entrada)) > 1, 
-                                        (select if(tbl_controle.data_saida <> '0000-00-00 00:00:00',
+                                    timediff(current_timestamp(), tbl_controle.data_entrada)) > 1, 
+                                        (select if(tbl_controle.data_saida like ('0000-00-00 00:00:00'),
                                             (select 
                                                 ((hour(
-                                                timediff(tbl_controle.data_saida, tbl_controle.data_entrada)) - 1) 
+                                                timediff(current_timestamp(), tbl_controle.data_entrada)) - 1) 
                                                     * tbl_valor.demais_horas) 
                                                         + tbl_valor.hora_inicial 
-                                                        + (((minute(timediff(tbl_controle.data_saida, tbl_controle.data_entrada)) 
+                                                        + (((minute(timediff(current_timestamp(), tbl_controle.data_entrada)) 
                                                             / 60) * tbl_valor.demais_horas)   )), 'Controle não finalizado')),
-                                        (select tbl_valor.hora_inicial))) ,2)  as valor,
+                                        (select tbl_valor.hora_inicial))) ,2)  as valor_atual,
+						tbl_controle.valor_final,
                         tbl_veiculo.id as id_veiculo,
                         tbl_veiculo.placa,
                         tbl_cliente.id as id_cliente,
@@ -356,7 +363,8 @@
                     "id"            => $dadosArray['id'],
                     "data_entrada"  => $dadosArray['data_entrada'],
                     "data_saida"    => $dadosArray['data_saida'],
-                    "valor_total"   => $dadosArray['valor'],
+                    "valor_final"   => $dadosArray['valor_final'],
+                    "valor_atual"   => $dadosArray['valor_atual'],
                     "veiculo"   => array(
                                                 "id_veiculo" => $dadosArray['id_veiculo'],
                                                 "placa"      => $dadosArray['placa'],
@@ -404,16 +412,17 @@
                         format(
                             (select if(
                                 hour(
-                                    timediff(tbl_controle.data_saida, tbl_controle.data_entrada)) > 1, 
-                                        (select if(tbl_controle.data_saida <> '0000-00-00 00:00:00',
+                                    timediff(current_timestamp(), tbl_controle.data_entrada)) > 1, 
+                                        (select if(tbl_controle.data_saida like ('0000-00-00 00:00:00'),
                                             (select 
                                                 ((hour(
-                                                timediff(tbl_controle.data_saida, tbl_controle.data_entrada)) - 1) 
+                                                timediff(current_timestamp(), tbl_controle.data_entrada)) - 1) 
                                                     * tbl_valor.demais_horas) 
                                                         + tbl_valor.hora_inicial 
-                                                        + (((minute(timediff(tbl_controle.data_saida, tbl_controle.data_entrada)) 
+                                                        + (((minute(timediff(current_timestamp(), tbl_controle.data_entrada)) 
                                                             / 60) * tbl_valor.demais_horas)   )), 'Controle não finalizado')),
-                                        (select tbl_valor.hora_inicial))) ,2)  as valor,
+                                        (select tbl_valor.hora_inicial))) ,2)  as valor_atual,
+						tbl_controle.valor_final,
                         tbl_veiculo.id as id_veiculo,
                         tbl_veiculo.placa,
                         tbl_cliente.id as id_cliente,
@@ -456,7 +465,8 @@
                     "id"            => $dadosArray['id'],
                     "data_entrada"  => $dadosArray['data_entrada'],
                     "data_saida"    => $dadosArray['data_saida'],
-                    "valor_total"   => $dadosArray['valor'],
+                    "valor_final"   => $dadosArray['valor_final'],
+                    "valor_atual"   => $dadosArray['valor_atual'],
                     "veiculo"   => array(
                                                 "id_veiculo" => $dadosArray['id_veiculo'],
                                                 "placa"      => $dadosArray['placa'],
@@ -504,16 +514,17 @@
                         format(
                             (select if(
                                 hour(
-                                    timediff(tbl_controle.data_saida, tbl_controle.data_entrada)) > 1, 
-                                        (select if(tbl_controle.data_saida <> '0000-00-00 00:00:00',
+                                    timediff(current_timestamp(), tbl_controle.data_entrada)) > 1, 
+                                        (select if(tbl_controle.data_saida like ('0000-00-00 00:00:00'),
                                             (select 
                                                 ((hour(
-                                                timediff(tbl_controle.data_saida, tbl_controle.data_entrada)) - 1) 
+                                                timediff(current_timestamp(), tbl_controle.data_entrada)) - 1) 
                                                     * tbl_valor.demais_horas) 
                                                         + tbl_valor.hora_inicial 
-                                                        + (((minute(timediff(tbl_controle.data_saida, tbl_controle.data_entrada)) 
+                                                        + (((minute(timediff(current_timestamp(), tbl_controle.data_entrada)) 
                                                             / 60) * tbl_valor.demais_horas)   )), 'Controle não finalizado')),
-                                        (select tbl_valor.hora_inicial))) ,2)  as valor,
+                                        (select tbl_valor.hora_inicial))) ,2)  as valor_atual,
+						tbl_controle.valor_final,
                         tbl_veiculo.id as id_veiculo,
                         tbl_veiculo.placa,
                         tbl_cliente.id as id_cliente,
@@ -557,7 +568,8 @@
                     "id"            => $dadosArray['id'],
                     "data_entrada"  => $dadosArray['data_entrada'],
                     "data_saida"    => $dadosArray['data_saida'],
-                    "valor_total"   => $dadosArray['valor'],
+                    "valor_final"   => $dadosArray['valor_final'],
+                    "valor_atual"   => $dadosArray['valor_atual'],
                     "veiculo"   => array(
                                                 "id_veiculo" => $dadosArray['id_veiculo'],
                                                 "placa"      => $dadosArray['placa'],
@@ -624,6 +636,7 @@
                         
                         values ('". $dados['data_entrada']."',
                                 '". $dados['data_saida']."',
+                                ". $dados['valor_final'].",
                                 ". $dados['id_veiculo'].",
                                 ". $dados['id_vaga'].");";
 
@@ -653,6 +666,7 @@
         $sql = "update tbl_controle set
                         data_entrada = '".   $dados['data_entrada']."',
                         data_saida = '".     $dados['data_saida']."',
+                        valor_final =".      $dados['valor_final'].",
                         id_veiculo = ".     $dados['id_veiculo'].",
                         id_vaga = ".        $dados['id_vaga'].
                 " where id = ". $dados['id'].";";
