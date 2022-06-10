@@ -15,6 +15,4 @@
     //insertVaga($dados);
 
     // $vagas = selectAllVagas();
-    
-
 ?>
