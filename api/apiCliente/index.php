@@ -137,9 +137,9 @@
 
    });
 
-      //Endpoint Requisição para alterar um veiculo, simulando o PUT
-      $app->post('/clientes/{id}', function($request, $response, $args)
-      {
+   //Endpoint Requisição para alterar um veiculo, simulando o PUT
+   $app->post('/clientes/{id}', function($request, $response, $args)
+   {
          if(is_numeric($args['id']))
          {
             //Recebe o id enviado no Endpoint atraves da vareavel ID
@@ -249,8 +249,7 @@
                               ->write('{"message" : "É obrigatorio informar um ID com formato valido (número)"}');
          }
    
-      });
-
+   });
 
    //Endpoint Requisição para deletar cliente por id
    $app->delete('/clientes/{id}', function($request, $response, $args)
@@ -294,8 +293,6 @@
          }
    
    });
-
-
 
    $app->run();
 ?>
