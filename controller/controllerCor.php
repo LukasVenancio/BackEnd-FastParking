@@ -1,9 +1,12 @@
 <?php
-   require_once("./model/bd/modelCor.php"); 
+   require_once(SRC."./model/bd/modelCor.php"); 
 
    function listarCor()
    {
-       $dados = selectAllCor();
+        $dados = selectAllCor();
+
+        var_dump($dados);
+        die;
 
        if(!empty($dados)){
            return $dados;
@@ -11,7 +14,7 @@
        }else{
            return false;
        }
-   }
+    }
 
 
     function buscarCor($id)

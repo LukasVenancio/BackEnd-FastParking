@@ -129,7 +129,7 @@
          $sql = "update tbl_cliente set
              nome            = '".$dadosCliente["nome"]     ."', 
              telefone        = '".$dadosCliente["telefone"] ."' 
-             where idContato =  ".$dadosCliente["id"]       .";"
+             where id        =  ".$dadosCliente["id"]       .";"
          ;  
 
          if (mysqli_query($conexao, $sql))

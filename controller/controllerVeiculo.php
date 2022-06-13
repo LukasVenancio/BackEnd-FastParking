@@ -1,5 +1,5 @@
 <?php
-    require_once("./model/bd/modelVeiculo.php");
+    require_once(SRC."./model/bd/modelVeiculo.php");
 
     function listarVeiculos()
     {
@@ -15,7 +15,7 @@
 
     function inserirVeiculos($dados)
     {
-        if(!empty($dados['placa']) && !empty($dados['idcor']) && is_numeric($dados['idcor']) && !empty($dados['idcategoria']) && is_numeric($dados['idcategoria']) && !empty($dados['idmodelo']) && is_numeric($dados['idmodelo']))
+        if(!empty($dados['placa']) && !empty($dados['id_cor']) && is_numeric($dados['id_cor']) && !empty($dados['id_categoria']) && is_numeric($dados['id_categoria']) && !empty($dados['id_modelo']) && is_numeric($dados['id_modelo']))
         {
             if(insertVeiculo($dados))
             {
@@ -83,6 +83,8 @@
     {
         if(!empty($placa))
         {
+            require_once(SRC."./model/bd/modelVeiculo.php");
+
             $dados = selectByplacaVeiculo($placa);
 
             if(!empty($dados))
@@ -104,9 +106,10 @@
 
     function atualizarVeiculo($dados)
     {
+
         if(!empty($dados['id']) && is_numeric($dados['id']))
         {
-            if(!empty($dados['placa']) && !empty($dados['idcor']) && is_numeric($dados['idcor']) && !empty($dados['idcategoria']) && is_numeric($dados['idcategoria']) && !empty($dados['idmodelo']) && is_numeric($dados['idmodelo']))
+            if(!empty($dados['placa']) && !empty($dados['id_cor']) && is_numeric($dados['id_cor']) && !empty($dados['id_categoria']) && is_numeric($dados['id_categoria']) && !empty($dados['id_modelo']) && is_numeric($dados['id_modelo']))
             {
                 if(updateVeiculo($dados))
                 {
