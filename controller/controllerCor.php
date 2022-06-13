@@ -5,9 +5,6 @@
    {
         $dados = selectAllCor();
 
-        var_dump($dados);
-        die;
-
        if(!empty($dados)){
            return $dados;
        
