@@ -728,15 +728,20 @@
 
         $conexao = conectarMysql();
 
-        $sql = "insert into tbl_controle (data_entrada, data_saida, id_veiculo, id_vaga)
-                        
-                        values ('". $dados['data_entrada']."',
-                                '". $dados['data_saida']."',
-                                ". $dados['valor_final'].",
-                                ". $dados['id_veiculo'].",
-                                ". $dados['id_vaga'].");";
+        $entrada = explode(' ', $dados['data_entrada']);
+        $saida = explode(' ', $dados['data_saida']);
 
+        $sql = "insert into tbl_controle (data_entrada, data_saida, valor_final, id_veiculo, id_vaga)
+                    values(concat('".$entrada[0]."',' ', concat(substring('".$entrada[1]."', 1,2), ':', substring('".$entrada[1]."', 5,2), ':', substring('.$entrada[1].', 9,2))), 
+                            concat('".$saida[0]."',' ', concat(substring('".$saida[1]."', 1,2), ':', substring('".$saida[1]."', 5,2), ':', substring('$saida[1]', 9,2))), 
+                            '".$dados['valor_final']."',
+                             ".$dados['id_veiculo'].", 
+                             ".$dados['id_vaga'].");";
+
+                            //  print_r($sql);
+                            //  die;
         
+                            
         if(mysqli_query($conexao, $sql)){
 
             if(mysqli_affected_rows($conexao)){
@@ -757,16 +762,21 @@
 
         $resultado = (boolean) false;
 
+        // var_dump($dados);
+        // die;
+
         $conexao = conectarMysql();
 
         $sql = "update tbl_controle set
                         data_entrada = '".   $dados['data_entrada']."',
                         data_saida = '".     $dados['data_saida']."',
-                        valor_final =".      $dados['valor_final'].",
+                        valor_final = ".      $dados['valor_final'].",
                         id_veiculo = ".     $dados['id_veiculo'].",
                         id_vaga = ".        $dados['id_vaga'].
                 " where id = ". $dados['id'].";";
 
+        // var_dump($sql);
+        // die;
         if(mysqli_query($conexao, $sql)){
 
             if(mysqli_affected_rows($conexao)){

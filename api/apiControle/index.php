@@ -291,6 +291,8 @@
     /*EndPoint para inserir um novo controle. */
     $app->post('/controle', function($request, $response, $args){
 
+        // var_dump('hhska');
+        // die;
         /*Recupera o formato de dados do header da requisição.*/
         $contentTypeHeader = $request->getHeaderLine('Content-Type');
 
@@ -300,6 +302,9 @@
         if($contentType[0] == 'application/json'){
 
             $bodyData = $request->getParsedBody();
+
+            // print_r(utf8_encode($bodyData['data_entrada']));
+            // die;
 
             $resposta = inserirControles($bodyData);
 
@@ -341,6 +346,7 @@
                     "id"                => $id,
                     "data_entrada"      => $bodyData['data_entrada'],
                     "data_saida"        => $bodyData['data_saida'],
+                    "valor_final"        => $bodyData['valor_final'],
                     "id_veiculo"        => $bodyData['id_veiculo'],
                     "id_vaga"           => $bodyData['id_vaga']
                 );
