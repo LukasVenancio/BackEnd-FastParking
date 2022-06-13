@@ -7,6 +7,7 @@
 
     $app = new \Slim\App();
 
+    /*EndPoint para listar todos os controles. */
     $app->get('/controle', function($request, $response, $args){
 
         $dados = listarControles();
@@ -188,6 +189,82 @@
 
     });
 
+    /*EndPoint para listar os rendimentos do último ano.*/
+    $app->get('/controle/rendimentos/anuais', function($request, $response, $args){
+
+        $dados = listarRendimentosAnuais();
+
+        if($dados){
+
+            $dadosJson = toJSON($dados);
+
+            if($dadosJson){
+
+                return $response    ->withHeader('Content-Type', 'application/json')
+                                    ->write($dadosJson)
+                                    ->withStatus(200);
+            }
+        
+        }else{
+
+            return $response     ->withStatus(404)
+                                ->withHeader('Content-Type', 'application/json')
+                                ->write('[{"message" : "Item não encontrado"}]');
+        }
+
+    });
+
+    /*EndPoint para listar os rendimentos do último mês. */
+    $app->get('/controle/rendimentos/mensais', function($request, $response, $args){
+
+        $dados = listarRendimentosMensais();
+
+        if($dados){
+
+            $dadosJson = toJSON($dados);
+
+            if($dadosJson){
+
+                return $response    ->withHeader('Content-Type', 'application/json')
+                                    ->write($dadosJson)
+                                    ->withStatus(200);
+            }
+        
+        }else{
+
+            return $response     ->withStatus(404)
+                                ->withHeader('Content-Type', 'application/json')
+                                ->write('[{"message" : "Item não encontrado"}]');
+        }
+
+    });
+
+    /*EndPoint para listar os rendimentos do último dia. */
+    $app->get('/controle/rendimentos/diarios', function($request, $response, $args){
+
+        $dados = listarRendimentosDiarios();
+
+        if($dados){
+
+            $dadosJson = toJSON($dados);
+
+            if($dadosJson){
+
+                return $response    ->withHeader('Content-Type', 'application/json')
+                                    ->write($dadosJson)
+                                    ->withStatus(200);
+            }
+        
+        }else{
+
+            return $response     ->withStatus(404)
+                                ->withHeader('Content-Type', 'application/json')
+                                ->write('[{"message" : "Item não encontrado"}]');
+        }
+
+    });
+
+    /*EndPoint para excluir um controle a partir de seu ID. */
     $app->delete('/controle/{id}', function($request, $response, $args){
 
         $id = $args['id'];
@@ -211,6 +288,7 @@
 
     });
 
+    /*EndPoint para inserir um novo controle. */
     $app->post('/controle', function($request, $response, $args){
 
         /*Recupera o formato de dados do header da requisição.*/
@@ -242,6 +320,7 @@
         }
     });
 
+    /*EndPoint para atualizar um controle. */
     $app->put('/controle/{id}', function($request, $response, $args){
 
         if(is_numeric($args['id'])){
@@ -285,8 +364,6 @@
             }
         }
     });
-
-    
 
     $app->run();
 

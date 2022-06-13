@@ -606,6 +606,102 @@
 
     }
 
+    function annualReturns(){
+
+        $conexao = conectarMysql();
+        $sql = "select sum(valor_final) as rendimentos 
+                    from tbl_controle 
+                    where date(data_entrada) between curdate() - interval 1 year and curdate();";
+
+        $dados = mysqli_query($conexao, $sql);
+
+        if($dados){
+
+            $contator = 0;
+
+            if($dadosArray = mysqli_fetch_assoc($dados)){
+
+                $resultado = array(
+
+                    "rendimentos"  => $dadosArray['rendimentos'],
+                );
+            }
+
+            fecharConexaoMysql($conexao);
+
+            if(isset($resultado)){
+                return $resultado;
+            
+            }else{
+                return false;
+            }
+        }
+    }
+
+    function monthlyReturns(){
+
+        $conexao = conectarMysql();
+        $sql = "select sum(valor_final) as rendimentos 
+                    from tbl_controle 
+                    where date(data_entrada) between curdate() - interval 1 month and curdate();";
+
+        $dados = mysqli_query($conexao, $sql);
+
+        if($dados){
+
+            $contator = 0;
+
+            if($dadosArray = mysqli_fetch_assoc($dados)){
+
+                $resultado = array(
+
+                    "rendimentos"  => $dadosArray['rendimentos'],
+                );
+            }
+
+            fecharConexaoMysql($conexao);
+
+            if(isset($resultado)){
+                return $resultado;
+            
+            }else{
+                return false;
+            }
+        }
+    }
+
+    function dailyReturns(){
+
+        $conexao = conectarMysql();
+        $sql = "select sum(valor_final) as rendimentos 
+                    from tbl_controle 
+                    where date(data_entrada) between curdate() - interval 1 day and curdate();";
+
+        $dados = mysqli_query($conexao, $sql);
+
+        if($dados){
+
+            $contator = 0;
+
+            if($dadosArray = mysqli_fetch_assoc($dados)){
+
+                $resultado = array(
+
+                    "rendimentos"  => $dadosArray['rendimentos'],
+                );
+            }
+
+            fecharConexaoMysql($conexao);
+
+            if(isset($resultado)){
+                return $resultado;
+            
+            }else{
+                return false;
+            }
+        }
+    }
+
     function deleteControle($id){
 
         $conexao = conectarMysql();

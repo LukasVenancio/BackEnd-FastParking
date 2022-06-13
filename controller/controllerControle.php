@@ -14,6 +14,42 @@
         }
     }
 
+    function listarRendimentosAnuais(){
+
+        $dados = annualReturns();
+
+        if(!empty($dados)){
+            return $dados;
+        
+        }else{
+            return false;
+        }
+    }
+
+    function listarRendimentosMensais(){
+
+        $dados = monthlyReturns();
+
+        if(!empty($dados)){
+            return $dados;
+        
+        }else{
+            return false;
+        }
+    }
+
+    function listarRendimentosDiarios(){
+
+        $dados = dailyReturns();
+
+        if(!empty($dados)){
+            return $dados;
+        
+        }else{
+            return false;
+        }
+    }
+
     function listarControlesSemDataSaida(){
 
         $dados = selectControleByDataSaidaNull();
