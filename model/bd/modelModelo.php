@@ -43,7 +43,7 @@
            {
                $arrayDados[$cont] = array(
                    "id"        => $rsDados["id"],
-                   "modelo"      => $rsDados["modelo"]
+                   "modelo"    => $rsDados["modelo"]
                );
                $cont++;
            }   

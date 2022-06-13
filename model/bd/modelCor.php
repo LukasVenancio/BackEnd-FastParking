@@ -6,10 +6,10 @@
    {
       $conexao = conectarMysql();
 
-      $sql = "select * from tbl_cor order by id desc";
-
+      $sql = "select * from tbl_cor order by id asc";
+      
       $result = mysqli_query($conexao, $sql);
-
+      
       if($result)
       {
          $cont =0;

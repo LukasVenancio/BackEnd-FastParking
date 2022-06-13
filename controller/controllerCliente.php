@@ -1,6 +1,6 @@
 <?php
 
-   require_once("./model/bd/modelCliente.php");
+   require_once(SRC."./model/bd/modelCliente.php");
 
    function listarClientes()
    {
