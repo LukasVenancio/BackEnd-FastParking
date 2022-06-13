@@ -5,7 +5,15 @@
     function selectAllValores (){
 
         $conexao = conectarMysql();
-        $sql = "select * from tbl_valor;";
+        $sql = "select tbl_tipo.id as id_tipo, 
+                        tbl_tipo.tipo,
+                        tbl_valor.id as id_valor,
+                        tbl_valor.hora_inicial,
+                        tbl_valor.demais_horas
+                    from tbl_valor
+                        inner join tbl_tipo
+                            on tbl_tipo.id_valor = tbl_valor.id 
+                    order by tbl_tipo.id;";
 
         $dados = mysqli_query($conexao, $sql);
 
@@ -17,7 +25,9 @@
 
                 $resultado[$contator] = array(
 
-                    "id"                => $dadosArray['id'],
+                    "id_tipo"           => $dadosArray['id_tipo'],
+                    "tipo"              => $dadosArray['tipo'],
+                    "id_valor"          => $dadosArray['id_valor'],
                     "hora_inicial"      => $dadosArray['hora_inicial'],
                     "demais_horas"      => $dadosArray['demais_horas']
                 );
@@ -28,7 +38,12 @@
 
             fecharConexaoMysql($conexao);
 
-            return $resultado;
+            if(isset($resultado)){
+                return $resultado;
+            
+            }else{
+                return false;
+            }
 
         }
 
@@ -37,7 +52,16 @@
     function selectValorById ($id){
 
         $conexao = conectarMysql();
-        $sql = "select * from tbl_valor where id = " . $id . ";";
+        $sql = "select tbl_tipo.id as id_tipo, 
+                        tbl_tipo.tipo,
+                        tbl_valor.id as id_valor,
+                        tbl_valor.hora_inicial,
+                        tbl_valor.demais_horas
+                    from tbl_valor
+                        inner join tbl_tipo
+                            on tbl_tipo.id_valor = tbl_valor.id 
+                    where tbl_valor.id = ". $id."  
+                    order by tbl_tipo.id;";
         
 
         $dados = mysqli_query($conexao, $sql);
@@ -49,7 +73,9 @@
 
                 $resultado = array(
 
-                    "id"                => $dadosArray['id'],
+                    "id_tipo"           => $dadosArray['id_tipo'],
+                    "tipo"              => $dadosArray['tipo'],
+                    "id_valor"          => $dadosArray['id_valor'],
                     "hora_inicial"      => $dadosArray['hora_inicial'],
                     "demais_horas"      => $dadosArray['demais_horas']
                 );
@@ -58,7 +84,12 @@
 
         fecharConexaoMysql($conexao);
 
-        return $resultado;
+        if(isset($resultado)){
+            return $resultado;
+        
+        }else{
+            return false;
+        }
 
     }
 

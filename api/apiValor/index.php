@@ -3,15 +3,13 @@
     require_once('vendor/autoload.php');
 
     require_once('../modolo/config.php');
-    require_once('../controller/controllerVaga.php');
+    require_once('../controller/controllerValor.php');
 
-    /*Criando uma instância do Slim para configurar os EndPoints */
     $app = new \Slim\App();
 
-    /*EndPoint para buscar todas as vagas.*/
-    $app->get('/vagas', function($request, $response, $args){
+    $app->get('/valor', function($request, $response, $args){
 
-        $dados = listarVagas();
+        $dados = listarValores();
 
         if($dados){
             
@@ -34,12 +32,11 @@
 
     });
 
-    /*EndPoint para buscar vagas pelo ID. */
-    $app->get('/vagas/{id}', function($request, $response, $args){
+    $app->get('/valor/{id}', function($request, $response, $args){
 
         $id = $args['id'];
 
-        $dados = buscarVagas($id);
+        $dados = buscarValores($id);
 
         if($dados){
 
@@ -71,83 +68,11 @@
 
     });
 
-    $app->get('/vagas/ocupacao/{valorOcupacao}', function($request, $response, $args){
-
-        $valorOcupacao = $args['valorOcupacao'];
-
-        $dados = buscarVagasPorOcupacao($valorOcupacao);
-
-        if($dados){
-
-            $dadosJson = toJSON($dados);
-
-            if($dadosJson){
-
-                if(!isset($dados['Erro'])){
-
-                    return $response ->withHeader('Content-Type', 'application/json')
-                                    ->write($dadosJson)
-                                    ->withStatus(200);
-                
-                }else{
-                    
-                    return $response    ->withStatus(404)
-                                        ->withHeader('Content-Type', 'application/json')
-                                        ->write($dadosJson);
-                }
-            }
-        
-        }else{
-
-            return $response     ->withStatus(404)
-                                ->withHeader('Content-Type', 'application/json')
-                                ->write('[{"message" : "Item não encontrado"}]');
-        }
-
-
-    });
-
-    $app->get('/vagas/preferencial/{valorPreferencial}', function($request, $response, $args){
-
-        $valorPreferencial = $args['valorPreferencial'];
-
-        $dados = buscarVagasPorPreferencial($valorPreferencial);
-
-        if($dados){
-
-            $dadosJson = toJSON($dados);
-
-            if($dadosJson){
-
-                if(!isset($dados['Erro'])){
-
-                    return $response ->withHeader('Content-Type', 'application/json')
-                                    ->write($dadosJson)
-                                    ->withStatus(200);
-                
-                }else{
-                    
-                    return $response    ->withStatus(404)
-                                        ->withHeader('Content-Type', 'application/json')
-                                        ->write($dadosJson);
-                }
-            }
-        
-        }else{
-
-            return $response     ->withStatus(404)
-                                ->withHeader('Content-Type', 'application/json')
-                                ->write('[{"message" : "Item não encontrado"}]');
-        }
-
-
-    });
-
-    $app->delete('/vagas/{id}', function($request, $response, $args){
+    $app->delete('/valor/{id}', function($request, $response, $args){
 
         $id = $args['id'];
 
-        $dados = excluirVagas($id);
+        $dados = excluirValores($id);
 
         if(isset($dados['Erro'])){
 
@@ -166,7 +91,7 @@
 
     });
 
-    $app->post('/vagas', function($request, $response, $args){
+    $app->post('/valor', function($request, $response, $args){
 
         /*Recupera o formato de dados do header da requisição.*/
         $contentTypeHeader = $request->getHeaderLine('Content-Type');
@@ -178,7 +103,7 @@
 
             $bodyData = $request->getParsedBody();
 
-            $resposta = inserirVagas($bodyData);
+            $resposta = inserirValores($bodyData);
 
             if(is_bool($resposta) && $resposta){
 
@@ -197,7 +122,7 @@
         }
     });
 
-    $app->put('/vagas/{id}', function($request, $response, $args){
+    $app->put('/valor/{id}', function($request, $response, $args){
 
         if(is_numeric($args['id'])){
 
@@ -215,16 +140,11 @@
 
                 $dados = array(
                     "id"                => $id,
-                    "ocupacao"          => $bodyData['ocupacao'],
-                    "preferencial"      => $bodyData['preferencial'],
-                    "id_tipo"           => $bodyData['id_tipo'],
-                    "id_estacionamento" => $bodyData['id_estacionamento'],
-                    "piso"              => $bodyData['piso'],
-                    "corredor"          => $bodyData['corredor'],
-                    "sigla"             => $bodyData['sigla']
+                    "hora_inicial"      => $bodyData['hora_inicial'],
+                    "demais_horas"      => $bodyData['demais_horas']
                 );
 
-                $resposta = atualizarVagas($dados);
+                $resposta = atualizarValores($dados);
 
                 if(is_bool($resposta) && $resposta){
 
@@ -244,6 +164,7 @@
         }
     });
 
+
+
     $app->run();
-    
 ?>
